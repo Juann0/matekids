@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/reset', async (req, res) => {
-    res.render('./app/reset', { estilosLogin: true, titulo: 'Olvide contraseña' });
+    res.render('./app/reset', { estilosLogin: true, titulo: 'Olvidé contraseña' });
 });
 
 module.exports = router;
