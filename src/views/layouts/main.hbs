@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/alertify.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/semantic.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,12 +59,14 @@
 <body>
     {{{ body }}}
     {{#if estilosLogin}}
+    <script src="./js/login.js"></script>
     <script src="./js/fondo.js"></script>
     <script src="./js/jquery.min.3.3.1.js"></script>
     <script>
         $(".toggle-password").click(function () { $(this).toggleClass("fa-eye fa-eye-slash"); var t = $($(this).attr("toggle")); "password" == t.attr("type") ? t.attr("type", "text") : t.attr("type", "password") }), $(document).on("auxclick", "a", function (t) { return 2 !== t.which || (t.preventDefault(), t.stopPropagation(), t.stopImmediatePropagation(), !1) });
     </script>
     {{/if}}
+    <script src="./js/alertify.js"></script>
 </body>
 
 </html>

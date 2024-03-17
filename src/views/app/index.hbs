@@ -12,7 +12,8 @@
         <div class="col-md-6 col-lg-6 col-sm-12 mx-auto">
             <div class="card shadow p-2 mb-2 bg-white rounded">
                 <div class="card-body">
-                    <form class="form-signin" method="POST" action="">
+                    <form class="form-signin" method="POST" action="/" onsubmit="return sendData();">
+                        <input type="hidden" name="_csrf" value="{{ csrf }}">
                         <div class="text-center mb-4">
                             <img class="w-100" src="./img/logo.png" alt="Matekids Logo">
                         </div>
@@ -27,8 +28,8 @@
                             <label for="password">Contraseña</label>
                             <span toggle="#password" class="fa fa-eye field-icon toggle-password"></span>
                         </div>
-                        <div class="d-grid">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Ingresar" />
+                        <div class="d-grid gap-2" id="btnSend">
+                            <button class="btn btn-primary" type="submit">Ingresar</button>
                         </div>
                         <div class="d-grid p-4 text-center">
                             <a href="/reset">¿Olvidaste tu contraseña?</a>
