@@ -10,15 +10,19 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 var compression = require('compression')
+const { noEstaLaSesion, estaLaSesion } = require('./helpers/auth');
+const helmet = require('helmet');
 // Llamar librerias
 
 // Base de datos
-const { database } = require('./keys.js');
+// const { database } = require('./keys.js');
 // Base de datos
 
 // Configurar el sevidor
 const app = express();
 app.use(compression());
+app.set('trust proxy', 1);
+require('./helpers/passport');
 app.set('port', '4000');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs.engine({
@@ -36,7 +40,7 @@ app.use(session({
     secret: 'mateKids=@@@#App',
     resave: false,
     saveUninitialized: true,
-    store: new MySQLStore(database),
+    // store: new MySQLStore(database),
 }));
 
 // Servidor
@@ -49,10 +53,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 // Servidor
+app.use(helmet({
+    contentSecurityPolicy: false,
+    frameguard: {
+        action: 'deny'
+    },
+    noCache: true
+}));
 
-//Variables globales
+// Variables globales
 app.use((req, res, next) => {
     app.locals.user = req.user;
+    app.locals.vacio = req.flash('vacio');
+    app.locals.error = req.flash('error');
+    app.locals.correcto = req.flash('correcto');
     next();
 });
 
@@ -60,20 +74,21 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, './public')));
 // Archivos
 
-// Rutas
-app.use('/', require('./routes/inicio'));
-// Rutas
-
-app.use((req, res) => {
-    res.status(404).redirect('/404')
-});
-
-// //No caché
+// Desactivar el caché
 app.use((req, res, next) => {
     res.set('Cache-Control', 'no-store');
     next();
 });
 
+// Rutas
+app.use('/', require('./routes/inicio'));
+app.use('/app', require('./routes/app/index'));
+app.use('/app/admin', require('./routes/app/docentes'));
+// Rutas
+
+app.use((req, res) => {
+    res.status(404).redirect('/404')
+});
 
 app.listen(app.get('port'), () => {
     console.log(`URL del servidor es http://127.0.0.1:${app.get('port')}`);

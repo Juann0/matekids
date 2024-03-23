@@ -7,20 +7,15 @@
     <link rel="stylesheet" href="/css/alertify.css">
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/semantic.css">
-    <link href="/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="shortcut icon" href="/img/logo2.png" />
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins' !important;
-        }
-    </style>
     {{#if estilosLogin}}
+    <link href="/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./css/float-labels.css">
     <style>
@@ -53,20 +48,66 @@
         }
     </style>
     {{/if}}
+    {{#if home}}
+    <link rel="stylesheet" href="/css/nucleo.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <style>
+        .creditos {
+            font-size: 9px;
+        }
+
+        * {
+            font-family: 'Poppins' !important;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+    {{/if}}
+    <style>
+        body {
+            font-family: 'Poppins' !important;
+        }
+    </style>
     <title>{{ titulo }}</title>
 </head>
+{{#if home}}
 
-<body>
-    {{{ body }}}
-    {{#if estilosLogin}}
-    <script src="./js/login.js"></script>
-    <script src="./js/fondo.js"></script>
-    <script src="./js/jquery.min.3.3.1.js"></script>
-    <script>
-        $(".toggle-password").click(function () { $(this).toggleClass("fa-eye fa-eye-slash"); var t = $($(this).attr("toggle")); "password" == t.attr("type") ? t.attr("type", "text") : t.attr("type", "password") }), $(document).on("auxclick", "a", function (t) { return 2 !== t.which || (t.preventDefault(), t.stopPropagation(), t.stopImmediatePropagation(), !1) });
-    </script>
-    {{/if}}
-    <script src="./js/alertify.js"></script>
-</body>
+<body class="g-sidenav-show bg-gray-100">
+    {{else}}
+
+    <body>
+        {{/if}}
+
+        {{{ body }}}
+        {{#if estilosLogin}}
+        {{!-- <div class="imagen"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(3px); background-color: rgba(255, 255, 255, 0.1);">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.67/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/64t99to6JpJ2uLkl/scene.splinecode"></spline-viewer>
+        </div> --}}
+        <script src="/js/login.js"></script>
+        <script src="/js/fondo.js"></script>
+        <script src="/js/jquery.min.3.3.1.js"></script>
+        <script>
+            $(".toggle-password").click(function () { $(this).toggleClass("fa-eye fa-eye-slash"); var t = $($(this).attr("toggle")); "password" == t.attr("type") ? t.attr("type", "text") : t.attr("type", "password") }), $(document).on("auxclick", "a", function (t) { return 2 !== t.which || (t.preventDefault(), t.stopPropagation(), t.stopImmediatePropagation(), !1) });
+        </script>
+        {{/if}}
+        <script src="/js/alertify.js"></script>
+        {{#if home}}
+        <script>
+            let logout = document.getElementById("logout"); // Encuentra el elemento "p" en el sitio
+            logout.onclick = alertaLogout;
+            function alertaLogout() {
+                alertify.confirm('¡Advertencia!', '¿Deseas cerrar la sesión?', function () {
+                    location.href = "/app/logout";
+                }
+                    , function () { alertify.error('Cancelado') });
+            }
+        </script>
+        {{/if}}
+    </body>
 
 </html>
